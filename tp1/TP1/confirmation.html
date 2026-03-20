@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Confirmation</h1>
+    <p>Merci pour votre réservation. Votre voyage est confirmé.</p>
+
+    <h2>Détails de votre réservation :</h2>
+    <ul>
+        <li><strong>Nombre de personnes :</strong> <span id="res-nombre"></span></li>
+        <li><strong>Destination :</strong> <span id="res-destination"></span></li>
+        <li><strong>Nom :</strong> <span id="res-nom"></span></li>
+        <li><strong>E-mail :</strong> <span id="res-email"></span></li>
+        <li><strong>Moyen de paiement :</strong> <span id="res-paiement"></span></li>
+    </ul>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+
+        document.getElementById('res-nombre').textContent = params.get('nombre') || 'Non renseigné';
+        document.getElementById('res-destination').textContent = params.get('destination') || 'Non renseignée';
+        document.getElementById('res-nom').textContent = params.get('nom') || 'Non renseigné';
+        document.getElementById('res-email').textContent = params.get('email') || 'Non renseigné';
+
+        let paiement = params.get('paiement');
+        if (paiement === 'virement') paiement = 'Virement bancaire';
+        if (paiement === 'cheques') paiement = 'Chèques vacances';
+        document.getElementById('res-paiement').textContent = paiement || 'Non renseigné';
+    </script>
+</body>
+
+</html>

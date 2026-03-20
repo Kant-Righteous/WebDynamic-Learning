@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+    <h2>Confirmation</h2>
+    <table>
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td colspan="2" th:text="${nom}"></td>
+            </tr>
+            <tr>
+                <th>Destination</th>
+                <td th:text="${des}"></td>
+                <td><img th:src="@{'/images/'+${des}+'.png'}" alt="No Image"></td>
+            </tr>
+            <tr>
+                <th>Nombre de personnes</th>
+                <td colspan="2">
+                    <th:block th:if="${nbP != null and nbP > 0}">
+                        <span th:each="i : ${#numbers.sequence(1, nbP)}">👨</span>
+                    </th:block>
+                    <span th:if="${nbP == null or nbP == 0}">0</span>
+                </td>
+            </tr>
+            <tr>
+                <th>E-mail</th>
+                <td colspan="2" th:text="${mail}"></td>
+            </tr>
+            <tr>
+                <th>Moyen de paiement</th>
+                <td><span th:text="${payment}"></span></td>
+                <td th:if="${payment} == 'Virement'">IBAN : <span th:text="${iban}"></span></td>
+            </tr>
+            <tr>
+                <th>Promo Reception</th>
+                <td colspan="2" th:if="${promo}">Oui</td>
+                <td colspan="2" th:if="not ${promo}">Non</td>
+            </tr>
+            <tr>
+                <th>Accept Condictions</th>
+                <td colspan="2" th:if="${con}">Oui</td>
+                <td colspan="2" th:if="not ${con}">Non</td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="window.location.href='/resa'">Retour</button>
+    <form method="get" th:action="@{/resa/cancel}">
+        <button type="submit" onclick="alert('Annulation acceptée')">Annuler</button>
+    </form>
+    <button onclick="window.location.href='/resa/list'">Liste des réservations</button>
+</body>
+
+</html>

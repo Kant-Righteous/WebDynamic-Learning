@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter Conference</title>
+</head>
+<body>
+    <h2>Ajouter Conference</h2>
+<form method="POST" action="/addConference">
+    <label>Conference Titre</label>
+    <input type="text" name="titleConf"><br><br>
+    <label>Nombre d'édition</label>
+    <input type="number" name="nbEditionConf"><br><br>
+    <label>Date début</label>
+    <input type="date" name="dtStartConf"><br><br>
+    <label>Date fin</label>
+    <input type="date" name="dtEndConf"><br><br>
+    <label>Website Conference</label>
+    <input type="url" name="urlWebsiteConf"><br><br>
+
+    <button type="submit">Créer</button>
+</form>
+
+<br>
+<a href="conferences">Voir la liste des conférences</a>
+
+</body>
+</html>

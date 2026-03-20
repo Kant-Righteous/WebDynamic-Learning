@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agence Pas Loin Pas Cher!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <img src="images\logo.png" alt="no images" class="logo-center">
+    <h1> Pas Loin Pas Cher ! </h1>
+    <h2>L'agence</h2>
+    <p>L'agence Pas Loin Pas Cher propose des offres de voyages locaux et écologiques. Redécouvrez les merveilles de la
+        France grâce à nos voyages sur mesure.</p>
+    <p>Nous avons été récompensé de nos efforts en matière de service et de voyage écologique par <a
+            href="https://www.ecologie.gouv.fr">le Ministère de la Transition Ecologique.</a></p>
+
+    <h2>Sélection de destinations</h2>
+    <p>En cet automne 2022, nous vous proposons une sélection de visites dans le Sud-Ouest.</p>
+
+    <img src="images\Ardeches.png" alt="no images" class="img-resize">
+    <img src="images\Canal du midi.png" alt="no images" class="img-resize">
+    <img src="images\Foix.png" alt="no images" class="img-resize">
+    <img src="images\Sarlat.jpeg" alt="no images" class="img-resize">
+
+
+    <h2>Notre équipe</h2>
+    <table border="1">
+        <tr>
+            <th colspan="2">Les employés de l'agence</th>
+        </tr>
+        <tr>
+            <td>Directeur</td>
+            <td>Lily Sackville-Baggins</td>
+        </tr>
+        <tr>
+            <td rowspan="2">Chargés de communication</td>
+            <td>Fredrica Åström</td>
+        </tr>
+        <tr>
+            <td>Afaf Maysarah Salib</td>
+        </tr>
+        <tr>
+            <td rowspan="3">Guides</td>
+            <td>Trương Thị Túy Đoan</td>
+        </tr>
+        <tr>
+            <td>Ogier de Launay</td>
+        </tr>
+        <tr>
+            <td>Sota Nakajima (中嶋 颯太)</td>
+        </tr>
+    </table>
+
+    <h2>Lieu et heures d'ouverture</h2>
+    <ol>
+        <li class="ville">Toulouse</li>
+        <ul>
+            <li>Du lundi au jeudi, de 11h à 21h</li>
+            <li>vendredi et samedi, de 11h à minuit</li>
+        </ul>
+        <li class="ville">Bordeaux</li>
+        <ul>
+            <li>Du mardi au jeudi, de 9h à 20h</li>
+            <li>Vendredi et samedi, de 11h à 22h</li>
+            <li>Dimanche, de 10h à 14h</li>
+        </ul>
+    </ol>
+
+    <h2>Réservation</h2>
+    <form action="confirmation.html" method="get">
+        <table border="0">
+            <tr>
+                <td><label for="nombre">Nombre de personnes :</label></td>
+                <td><input type="number" placeholder="Ex: 2" name="nombre" id="nombre">(*)</td>
+            </tr>
+            <tr>
+                <td><label for="destination">Destination choisie :</label></td>
+                <td>
+                    <select name="destination" id="destination">
+                        <option value="">--Veuillez choisir une destination--</option>
+                        <option value="ardeches">Ardeches</option>
+                        <option value="canal du midi">Canal du midi</option>
+                        <option value="foix">Foix</option>
+                        <option value="sarlat">Sarlat</option>
+                    </select>(*)
+                </td>
+            </tr>
+            <tr>
+                <td><input type="button" value="Vérifier la disponibilité"></td>
+            </tr>
+            <tr>
+                <td><label for="nom">Nom :</label></td>
+                <td><input type="text" placeholder="Entrez votre nom" name="nom" id="nom">(*)</td>
+            </tr>
+            <tr>
+                <td><label for="email">Adresse e-mail :</label></td>
+                <td><input type="email" placeholder="Ex: prenom.nom@fai.com" name="email" id="email">(*)</td>
+            </tr>
+            <tr>
+                <td rowspan="2">Moyen de paiement :</td>
+                <td><input type="radio" name="paiement" id="virement"><label for="virement">Virement</label>
+                    <input type="radio" name="paiement" id="cheques"><label for="cheques">Chèques vacances</label> (*)
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"><label for="iban">IBAN :</label> <input type="text"
+                        placeholder="FR07 XXXX XXXX XXXX XXXX" size="30" name="iban" id="iban"></td>
+            </tr>
+            <tr>
+                <td colspan="3"><input type="checkbox" name="promo" id="promo"> <label for="promo">Je souhaite recevoir
+                        des offres promotionnelles.</label></td>
+            </tr>
+            <tr>
+                <td colspan="3"><input type="checkbox" name="conditions" id="conditions"> <label for="conditions">J'ai
+                        lu les conditions générales de vente.</label> (*)</td>
+            </tr>
+            <tr>
+                <td><button type="submit">Envoyer</button></td>
+                <td><button type="reset">Reset</button></td>
+            </tr>
+        </table>
+    </form>
+    <p>Les informations suivies d'un astérisque sont obligatoires.</p>
+    <footer>Copyright ©2042 | Agence Pas Loin Pas Cher (Pour me contacter: <a
+            href="mailto:contact@pasloinpascher.com">m'écrire</a>)</footer>
+</body>
+
+</html>

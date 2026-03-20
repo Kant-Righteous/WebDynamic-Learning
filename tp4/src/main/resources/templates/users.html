@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Users</title>
+</head>
+<body>
+<h2>Liste des Users et Conferences organisees</h2>
+
+<div th:if="${not #lists.isEmpty(users)}">
+    <table border="1">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Conferences organisees</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.name}"></td>
+            <td th:text="${u.email}"></td>
+            <td>
+                <span th:if="${#lists.isEmpty(u.organizedConferences)}">Aucune</span>
+                <ul th:if="${not #lists.isEmpty(u.organizedConferences)}">
+                    <li th:each="c : ${u.organizedConferences}" th:text="${c.titleConf}"></li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div th:if="${#lists.isEmpty(users)}">
+    <h3>Aucun user</h3>
+</div>
+
+<br>
+<a href="/createUsers.html">Ajouter un user</a>
+<br>
+<a href="/users/participations">Voir les participations (par id user)</a>
+<br>
+<a href="/conferences">Retour aux conferences</a>
+</body>
+</html>

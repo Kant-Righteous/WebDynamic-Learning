@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Participations User</title>
+</head>
+<body>
+<h2>Conferences participees par un user</h2>
+
+<form method="get" action="/users/participations">
+    <label>Id user:</label>
+    <input type="number" name="id" min="1" th:value="${selectedId}">
+    <button type="submit">Chercher</button>
+</form>
+
+<div th:if="${notFound}">
+    <p>User introuvable.</p>
+</div>
+
+<div th:if="${user != null}">
+    <h3>
+        User:
+        <span th:text="${user.name}"></span>
+        (id=<span th:text="${user.id}"></span>)
+    </h3>
+
+    <div th:if="${#lists.isEmpty(user.participatedConferences)}">
+        <p>Aucune conference.</p>
+    </div>
+
+    <table border="1" th:if="${not #lists.isEmpty(user.participatedConferences)}">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Date debut</th>
+            <th>Date fin</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${user.participatedConferences}">
+            <td th:text="${c.idConf}"></td>
+            <td th:text="${c.titleConf}"></td>
+            <td th:text="${c.dtStartConf}"></td>
+            <td th:text="${c.dtEndConf}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<a href="/users">Retour a la liste des users</a>
+<br>
+<a href="/conferences">Retour aux conferences</a>
+</body>
+</html>

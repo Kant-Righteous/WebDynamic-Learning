@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Reservation List</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+    <h2>Reservation List</h2>
+
+    <!-- Affichage du nom de l'utilisateur connecté s'il existe -->
+    <div th:if="${username != null}">
+        <h3>Bonjour <span th:text="${username}"></span> !</h3>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Reservation ID</th>
+                <th>Nom</th>
+                <th>Nombre de personnes</th>
+                <th>Destination choisie</th>
+                <th>Adresse e-mail</th>
+                <th>Moyen de paiement</th>
+                <th>IBAN</th>
+                <th>Promo</th>
+                <th>Conditions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="r, iterStat:${reservationList}">
+                <td th:text="${iterStat.index + 1}"></td>
+                <td th:text="${r.getNom()}"></td>
+                <td th:text="${r.getNbPersonnes()}"></td>
+                <td th:text="${r.getDestination()}"></td>
+                <td th:text="${r.getMail()}"></td>
+                <td th:text="${r.getMoyenPay()}"></td>
+                <td th:text="${r.getIBAN()}"></td>
+                <td th:text="${r.isRecevoirPromo()}"></td>
+                <td th:text="${r.isRead()}"></td>
+            </tr>
+        </tbody>
+    </table>
+    </table>
+    <br>
+    <button onclick="window.location.href='/resa'">Retour</button>
+    <a th:if="${username != null}" th:href="@{/resa/logout}">
+        <button type="button">Se déconnecter</button>
+    </a>
+</body>
+
+</html>

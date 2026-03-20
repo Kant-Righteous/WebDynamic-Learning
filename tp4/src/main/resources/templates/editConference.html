@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier Conference</title>
+</head>
+<body>
+<h2>Modifier Conference</h2>
+
+<form th:action="@{/updateConference}" method="post" th:object="${conference}">
+    <input type="hidden" th:field="*{idConf}"/>
+
+    <label>Titre :</label>
+    <input type="text" th:field="*{titleConf}"/><br><br>
+
+    <label>Nombre d'edition :</label>
+    <input type="number" th:field="*{nbEditionConf}"/><br><br>
+
+    <label>Date debut :</label>
+    <input type="date" th:field="*{dtStartConf}"/><br><br>
+
+    <label>Date fin :</label>
+    <input type="date" th:field="*{dtEndConf}"/><br><br>
+
+    <label>Website :</label>
+    <input type="text" th:field="*{urlWebsiteConf}"/><br><br>
+
+    <button type="submit">Enregistrer</button>
+    <button type="button" onclick="window.location.href='/conferences'">Annuler</button>
+</form>
+
+<hr>
+<h3>Gestion des relations User-Conference</h3>
+
+<p>
+    Organizer actuel:
+    <span th:if="${conference.organizer != null}"
+          th:text="${conference.organizer.name + ' (id=' + conference.organizer.id + ')'}"></span>
+    <span th:if="${conference.organizer == null}">Aucun</span>
+</p>
+
+<form th:action="@{/conference/setOrganizer}" method="post">
+    <input type="hidden" name="idConf" th:value="${conference.idConf}"/>
+    <label>Definir organizer:</label>
+    <select name="userId" required>
+        <option value="" selected disabled>Choisir user</option>
+        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.id + ' - ' + u.name}"></option>
+    </select>
+    <button type="submit">Set Organizer</button>
+</form>
+
+<form th:action="@{/conference/clearOrganizer}" method="post" style="margin-top: 8px;">
+    <input type="hidden" name="idConf" th:value="${conference.idConf}"/>
+    <button type="submit">Clear Organizer</button>
+</form>
+
+<h4>Participants actuels</h4>
+<div th:if="${#lists.isEmpty(conference.participants)}">Aucun participant</div>
+<ul th:if="${not #lists.isEmpty(conference.participants)}">
+    <li th:each="u : ${conference.participants}" th:text="${u.name + ' (id=' + u.id + ')'}"></li>
+</ul>
+
+<form th:action="@{/conference/addParticipant}" method="post">
+    <input type="hidden" name="idConf" th:value="${conference.idConf}"/>
+    <label>Ajouter participant:</label>
+    <select name="userId" required>
+        <option value="" selected disabled>Choisir user</option>
+        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.id + ' - ' + u.name}"></option>
+    </select>
+    <button type="submit">Ajouter</button>
+</form>
+
+<form th:action="@{/conference/removeParticipant}" method="post" style="margin-top: 8px;">
+    <input type="hidden" name="idConf" th:value="${conference.idConf}"/>
+    <label>Retirer participant:</label>
+    <select name="userId" required>
+        <option value="" selected disabled>Choisir user</option>
+        <option th:each="u : ${users}" th:value="${u.id}" th:text="${u.id + ' - ' + u.name}"></option>
+    </select>
+    <button type="submit">Retirer</button>
+</form>
+
+<h4>Users existants</h4>
+<div th:if="${#lists.isEmpty(users)}">Aucun user en base</div>
+<ul th:if="${not #lists.isEmpty(users)}">
+    <li th:each="u : ${users}" th:text="${u.id + ' - ' + u.name + ' (' + u.email + ')'}"></li>
+</ul>
+</body>
+</html>

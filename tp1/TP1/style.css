@@ -1,0 +1,53 @@
+html {
+    background-color: #E3B448;
+}
+
+body {
+    background-color: #CBD18F;
+    border: 3px solid #3A6B35;
+    margin: 1% 10%;
+    padding: 1% 2%;
+
+    font-family: sans-serif;
+}
+
+.logo-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h1 {
+    text-align: center;
+
+    border-bottom: 1px solid #3A6B35;
+
+    margin-top: 30px;
+
+    font-size: 2em;
+    font-family: "serif";
+
+    text-align: center;
+    text-transform: uppercase;
+}
+
+h2 {
+    color: #3A6B35;
+    font-size: 1em;
+}
+
+.ville {
+    font-weight: bold;
+}
+
+.img-resize {
+    width: 200px;
+    height: auto;
+}
+
+footer {
+    color: grey;
+    font-style: 0.7em;
+    margin-bottom: 10px;
+    font-weight: lighter;
+}

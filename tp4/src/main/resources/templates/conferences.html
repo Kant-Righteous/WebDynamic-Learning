@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Conférences</title>
+</head>
+
+<body>
+    <h2>Liste des Conférences</h2>
+    <div th:if="${not #lists.isEmpty(conferences)}">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Nombre d'édition</th>
+                    <th>Date début</th>
+                    <th>Date fin</th>
+                    <th>Website</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="conf : ${conferences}">
+                    <td th:text="${conf.titleConf}"></td>
+                    <td th:text="${conf.nbEditionConf}"></td>
+                    <td th:text="${conf.dtStartConf}"></td>
+                    <td th:text="${conf.dtEndConf}"></td>
+                    <td th:text="${conf.urlWebsiteConf}"></td>
+                    <td>
+                        <button type="button"
+                            th:onclick="'window.location.href=\'/editConference?idConf=' + ${conf.idConf} + '\''">Modifier</button>
+                        <form th:action="@{/delConference}" method="post" style="display:inline;">
+                            <input type="hidden" name="idConf" th:value="${conf.idConf}" />
+                            <button type="submit">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${#lists.isEmpty(conferences)}">
+        <h3>Aucune conférence</h3>
+    </div>
+
+    <br>
+
+    <button onclick="window.location.href='/createConferences.html'">Ajouter Conference</button>
+    <button onclick="window.location.href='/users'">Gerer Users</button>
+</body>
+
+</html>
