@@ -2,7 +2,10 @@ package utcapitole.miage.tp3.tp5.model;
 
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -15,16 +18,23 @@ public class Conference {
 
     private String titleconf;
     private Integer nbeditionconf;
-    private String dtstartconf;
-    private String dtendconf;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dtstartconf;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dtendconf;
     private String urlwebsiteconf;
 
     @ManyToOne
     @JoinColumn(name = "organizer_id")
     private User organizer;
 
-    @ManyToMany(mappedBy = "participatedConferences")
-    private List<User> participants;
+    @ManyToMany
+    @JoinTable(
+            name = "PARTICIPER",
+            joinColumns = @JoinColumn(name = "idConf"),
+            inverseJoinColumns = @JoinColumn(name = "idUser")
+    )
+    private List<User> participants = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -32,7 +42,7 @@ public class Conference {
             joinColumns = @JoinColumn(name = "idConf"),
             inverseJoinColumns = @JoinColumn(name = "idThematique")
     )
-    private List<Thematique> thematiques;
+    private List<Thematique> thematiques = new ArrayList<>();
 
     public Conference() {
     }
@@ -61,19 +71,19 @@ public class Conference {
         this.nbeditionconf = nbeditionconf;
     }
 
-    public String getDtstartconf() {
+    public LocalDate getDtstartconf() {
         return dtstartconf;
     }
 
-    public void setDtstartconf(String dtstartconf) {
+    public void setDtstartconf(LocalDate dtstartconf) {
         this.dtstartconf = dtstartconf;
     }
 
-    public String getDtendconf() {
+    public LocalDate getDtendconf() {
         return dtendconf;
     }
 
-    public void setDtendconf(String dtendconf) {
+    public void setDtendconf(LocalDate dtendconf) {
         this.dtendconf = dtendconf;
     }
 
@@ -107,5 +117,9 @@ public class Conference {
 
     public void setThematiques(List<Thematique> thematiques) {
         this.thematiques = thematiques;
+    }
+
+    public void setOrganisateur(User organisateur) {
+        this.organizer = organisateur;
     }
 }

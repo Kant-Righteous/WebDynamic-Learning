@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+</head>
+<body>
+<h1>Creer un compte</h1>
+
+<p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+
+<form th:action="@{/addUser}" th:object="${user}" method="post">
+    <div>
+        <label for="name">Nom</label>
+        <input id="name" type="text" th:field="*{name}" required>
+    </div>
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="email" th:field="*{email}" required>
+    </div>
+    <div>
+        <label for="password">Mot de passe</label>
+        <input id="password" type="password" th:field="*{password}" required>
+    </div>
+    <div>
+        <label for="statutId">Statut</label>
+        <select id="statutId" name="statutId">
+            <option value="">Selectionner</option>
+            <option th:each="statut : ${statuts}"
+                    th:value="${statut.codeStatut}"
+                    th:text="${statut.nomStatut}"></option>
+        </select>
+    </div>
+    <button type="submit">S'inscrire</button>
+</form>
+
+<p><a th:href="@{/login}">Se connecter</a></p>
+</body>
+</html>

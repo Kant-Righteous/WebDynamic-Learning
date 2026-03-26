@@ -3,6 +3,7 @@ package utcapitole.miage.tp3.tp5.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -25,15 +26,10 @@ public class User {
     private Statut statut;
 
     @OneToMany(mappedBy = "organizer")
-    private List<Conference> organizedConferences;
+    private List<Conference> organizedConferences = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_participate_conference",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "conference_id")
-    )
-    private List<Conference> participatedConferences;
+    @ManyToMany(mappedBy = "participants")
+    private List<Conference> participatedConferences = new ArrayList<>();
 
     public User() {}
 

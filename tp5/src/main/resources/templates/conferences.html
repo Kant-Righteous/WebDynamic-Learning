@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tableau de bord</title>
+</head>
+<body>
+<h1 th:text="'Bonjour ' + ${loggedInUser.name}"></h1>
+
+<p><a th:href="@{/logout}">Se deconnecter</a></p>
+
+<h2>Creer une conference</h2>
+<form th:action="@{/conferences/create}" th:object="${conferenceForm}" method="post">
+    <div>
+        <label for="titleconf">Titre</label>
+        <input id="titleconf" type="text" th:field="*{titleconf}" required>
+    </div>
+    <div>
+        <label for="nbeditionconf">Edition</label>
+        <input id="nbeditionconf" type="number" th:field="*{nbeditionconf}" required>
+    </div>
+    <div>
+        <label for="dtstartconf">Date debut</label>
+        <input id="dtstartconf" type="date" th:field="*{dtstartconf}" required>
+    </div>
+    <div>
+        <label for="dtendconf">Date fin</label>
+        <input id="dtendconf" type="date" th:field="*{dtendconf}" required>
+    </div>
+    <div>
+        <label for="urlwebsiteconf">Site web</label>
+        <input id="urlwebsiteconf" type="text" th:field="*{urlwebsiteconf}">
+    </div>
+    <div>
+        <label for="thematiqueIds">Thematiques</label>
+        <select id="thematiqueIds" name="thematiqueIds" multiple>
+            <option th:each="thematique : ${thematiques}"
+                    th:value="${thematique.idThematique}"
+                    th:text="${thematique.nomThematique}"></option>
+        </select>
+    </div>
+    <button type="submit">Creer</button>
+</form>
+
+<h2>Conferences organisees</h2>
+<ul>
+    <li th:each="conference : ${organizedConferences}" th:text="${conference.titleconf}"></li>
+    <li th:if="${#lists.isEmpty(organizedConferences)}">Aucune conference organisee.</li>
+</ul>
+
+<h2>Conferences auxquelles je participe</h2>
+<ul>
+    <li th:each="conference : ${participatingConferences}" th:text="${conference.titleconf}"></li>
+    <li th:if="${#lists.isEmpty(participatingConferences)}">Aucune conference rejointe.</li>
+</ul>
+
+<h2>Toutes les conferences</h2>
+<ul>
+    <li th:each="conference : ${allConferences}">
+        <span th:text="${conference.titleconf}"></span>
+        <span th:if="${conference.organizer != null}"
+              th:text="' - organisee par ' + ${conference.organizer.name}"></span>
+        <span th:if="${conference.dtstartconf != null and conference.dtendconf != null}"
+              th:text="' (' + ${conference.dtstartconf} + ' -> ' + ${conference.dtendconf} + ')'"></span>
+        <form th:if="${joinableConferenceIds.contains(conference.idconf)}"
+              th:action="@{/conferences/join}" method="post" style="display: inline;">
+            <input type="hidden" name="conferenceId" th:value="${conference.idconf}">
+            <button type="submit">Rejoindre</button>
+        </form>
+        <span th:unless="${joinableConferenceIds.contains(conference.idconf)}">Indisponible</span>
+    </li>
+    <li th:if="${#lists.isEmpty(allConferences)}">Aucune conference disponible.</li>
+</ul>
+</body>
+</html>
