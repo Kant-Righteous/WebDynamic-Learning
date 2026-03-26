@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Catalogue TMDB</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="page-shell">
+    <header class="page-header">
+        <div>
+            <h1>Catalogue de films TMDB</h1>
+            <p class="page-subtitle">Parcours les films populaires et gere tes favoris simplement.</p>
+        </div>
+        <div class="user-box">
+            <div th:if="${loginUser != null}">
+                <p class="user-name" th:text="${loginUser.username}">username</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="button-secondary">Se deconnecter</button>
+                </form>
+            </div>
+            <div th:if="${loginUser == null}">
+                <p class="simple-text">Connecte-toi pour sauvegarder tes films.</p>
+                <div class="header-actions">
+                    <a th:href="@{/login}" class="button-primary">Connexion</a>
+                    <a th:href="@{/register}" class="button-secondary">Inscription</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-grid">
+        <section class="catalog-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Films populaires</h2>
+                </div>
+                <p class="section-meta" th:text="'Page ' + ${filmPage.page} + ' / ' + ${filmPage.totalPages}">Page 1 / 1</p>
+            </div>
+
+            <div class="film-grid">
+                <article class="film-card" th:each="film : ${filmPage.results}">
+                    <div class="poster-frame">
+                        <img th:if="${film.posterPath != null}"
+                             th:src="'https://image.tmdb.org/t/p/w500' + ${film.posterPath}"
+                             th:alt="'Affiche de ' + ${film.title}">
+                        <div class="poster-placeholder" th:if="${film.posterPath == null}">Pas d'affiche</div>
+                    </div>
+                    <div class="film-card-body">
+                        <h3 th:text="${film.title}">title</h3>
+                        <p class="film-date" th:text="${film.releaseDate != null and !film.releaseDate.isEmpty() ? film.releaseDate : 'Date inconnue'}">Date</p>
+                        <a th:href="@{/film/{id}(id=${film.id})}" class="detail-link">Voir les details</a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="pagination-bar">
+                <a th:if="${filmPage.page > 1}" th:href="@{/films(page=${filmPage.page - 1})}" class="btn-page">&larr; Page precedente</a>
+                <span class="page-indicator" th:text="'Page ' + ${filmPage.page} + ' / ' + ${filmPage.totalPages}">Page 1 / 1</span>
+                <a th:if="${filmPage.page < filmPage.totalPages}" th:href="@{/films(page=${filmPage.page + 1})}" class="btn-page">Page suivante &rarr;</a>
+            </div>
+        </section>
+
+        <aside class="sidebar" th:if="${loginUser != null}">
+            <section class="saved-panel">
+                <div class="saved-panel-header">
+                    <h2>Favoris</h2>
+                    <span class="saved-count" th:text="${favoriteFilms.size()}">0</span>
+                </div>
+                <div class="saved-list" th:if="${!favoriteFilms.isEmpty()}">
+                    <div class="saved-item" th:each="film : ${favoriteFilms}">
+                        <a class="saved-link" th:href="@{/film/{id}(id=${film.tmdbFilmId})}">
+                            <img th:if="${film.posterPath != null}"
+                                 th:src="'https://image.tmdb.org/t/p/w200' + ${film.posterPath}"
+                                 th:alt="'Affiche de ' + ${film.title}">
+                            <div class="saved-item-placeholder" th:if="${film.posterPath == null}">No image</div>
+                            <span th:text="${film.title}">Film</span>
+                        </a>
+                        <form th:action="@{/film/remove}" method="post">
+                            <input type="hidden" name="tmdbFilmId" th:value="${film.tmdbFilmId}">
+                            <input type="hidden" name="action" value="FAVORITE">
+                            <input type="hidden" name="redirectTo" th:value="@{/films(page=${filmPage.page})}">
+                            <button type="submit" class="button-remove button-small">Retirer</button>
+                        </form>
+                    </div>
+                </div>
+                <p class="empty-state" th:if="${favoriteFilms.isEmpty()}">Aucun favori pour le moment.</p>
+            </section>
+
+            <section class="saved-panel">
+                <div class="saved-panel-header">
+                    <h2>A voir</h2>
+                    <span class="saved-count" th:text="${toWatchFilms.size()}">0</span>
+                </div>
+                <div class="saved-list" th:if="${!toWatchFilms.isEmpty()}">
+                    <div class="saved-item" th:each="film : ${toWatchFilms}">
+                        <a class="saved-link" th:href="@{/film/{id}(id=${film.tmdbFilmId})}">
+                            <img th:if="${film.posterPath != null}"
+                                 th:src="'https://image.tmdb.org/t/p/w200' + ${film.posterPath}"
+                                 th:alt="'Affiche de ' + ${film.title}">
+                            <div class="saved-item-placeholder" th:if="${film.posterPath == null}">No image</div>
+                            <span th:text="${film.title}">Film</span>
+                        </a>
+                        <form th:action="@{/film/remove}" method="post">
+                            <input type="hidden" name="tmdbFilmId" th:value="${film.tmdbFilmId}">
+                            <input type="hidden" name="action" value="WATCH">
+                            <input type="hidden" name="redirectTo" th:value="@{/films(page=${filmPage.page})}">
+                            <button type="submit" class="button-remove button-small">Retirer</button>
+                        </form>
+                    </div>
+                </div>
+                <p class="empty-state" th:if="${toWatchFilms.isEmpty()}">Aucun film enregistre a voir.</p>
+            </section>
+        </aside>
+    </main>
+</div>
+</body>
+</html>

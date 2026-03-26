@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscription</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="auth-page">
+    <section class="auth-card">
+        <div>
+            <p class="eyebrow">Nouveau compte</p>
+            <h1>Inscription</h1>
+            <p class="hero-copy">Cree un compte local pour sauvegarder les films qui t'interessent.</p>
+        </div>
+
+        <p class="error-banner" th:if="${error}" th:text="${error}">Erreur</p>
+
+        <form th:action="@{/register}" method="post" class="auth-form">
+            <label for="username">Nom d'utilisateur</label>
+            <input id="username" name="username" type="text" required>
+
+            <label for="password">Mot de passe</label>
+            <input id="password" name="password" type="password" required>
+
+            <button type="submit" class="button-primary auth-submit">Creer le compte</button>
+        </form>
+
+        <p class="auth-switch">Deja inscrit ? <a th:href="@{/login}">Se connecter</a></p>
+        <a th:href="@{/films}" class="back-link">Retour au catalogue</a>
+    </section>
+</div>
+</body>
+</html>

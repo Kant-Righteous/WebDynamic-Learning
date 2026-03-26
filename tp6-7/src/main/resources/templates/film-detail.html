@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail du film</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="detail-page">
+    <a th:href="@{/films}" class="back-link">&larr; Retour au catalogue</a>
+
+    <section class="detail-layout">
+        <div class="detail-poster-frame">
+            <img th:if="${film.posterPath != null}"
+                 th:src="'https://image.tmdb.org/t/p/w500' + ${film.posterPath}"
+                 th:alt="'Affiche de ' + ${film.title}">
+            <div class="poster-placeholder detail-placeholder" th:if="${film.posterPath == null}">Pas d'affiche</div>
+        </div>
+
+        <div class="detail-content">
+            <h1 th:text="${film.title}">Film Title</h1>
+            <p class="detail-date">
+                <strong>Date de sortie :</strong>
+                <span th:text="${film.releaseDate != null and !film.releaseDate.isEmpty() ? film.releaseDate : 'Inconnue'}">Date</span>
+            </p>
+            <p class="detail-overview" th:text="${film.overview != null and !film.overview.isEmpty() ? film.overview : 'Aucun resume disponible pour ce film.'}">Overview</p>
+
+            <div class="detail-actions" th:if="${loginUser != null}">
+                <form th:if="${!isFavorite}" th:action="@{/film/save}" method="post">
+                    <input type="hidden" name="tmdbFilmId" th:value="${film.id}">
+                    <input type="hidden" name="title" th:value="${film.title}">
+                    <input type="hidden" name="posterPath" th:value="${film.posterPath}">
+                    <input type="hidden" name="action" value="FAVORITE">
+                    <input type="hidden" name="redirectTo" th:value="@{/film/{id}(id=${film.id})}">
+                    <button type="submit" class="button-fav">Ajouter aux favoris</button>
+                </form>
+
+                <form th:if="${isFavorite}" th:action="@{/film/remove}" method="post">
+                    <input type="hidden" name="tmdbFilmId" th:value="${film.id}">
+                    <input type="hidden" name="action" value="FAVORITE">
+                    <input type="hidden" name="redirectTo" th:value="@{/film/{id}(id=${film.id})}">
+                    <button type="submit" class="button-remove">Retirer des favoris</button>
+                </form>
+
+                <form th:if="${!isToWatch}" th:action="@{/film/save}" method="post">
+                    <input type="hidden" name="tmdbFilmId" th:value="${film.id}">
+                    <input type="hidden" name="title" th:value="${film.title}">
+                    <input type="hidden" name="posterPath" th:value="${film.posterPath}">
+                    <input type="hidden" name="action" value="WATCH">
+                    <input type="hidden" name="redirectTo" th:value="@{/film/{id}(id=${film.id})}">
+                    <button type="submit" class="button-watch">Ajouter a ma liste</button>
+                </form>
+
+                <form th:if="${isToWatch}" th:action="@{/film/remove}" method="post">
+                    <input type="hidden" name="tmdbFilmId" th:value="${film.id}">
+                    <input type="hidden" name="action" value="WATCH">
+                    <input type="hidden" name="redirectTo" th:value="@{/film/{id}(id=${film.id})}">
+                    <button type="submit" class="button-remove">Retirer de ma liste</button>
+                </form>
+            </div>
+
+            <div class="notice-card" th:if="${loginUser == null}">
+                <p>Connecte-toi pour enregistrer ce film dans tes favoris ou ta liste a voir.</p>
+                <div class="hero-actions">
+                    <a th:href="@{/login}" class="button-primary">Connexion</a>
+                    <a th:href="@{/register}" class="button-secondary">Inscription</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>
