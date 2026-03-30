@@ -62,6 +62,32 @@ public class ConferenceController {
         return "redirect:/conferences";
     }
 
+    @PostMapping("/conferences/leave")
+    public String leaveConference(
+            @RequestParam("conferenceId") Integer conferenceId,
+            HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        conferenceService.leaveConference(conferenceId, user);
+        return "redirect:/conferences";
+    }
+
+    @PostMapping("/conferences/delete")
+    public String deleteConference(
+            @RequestParam("conferenceId") Integer conferenceId,
+            HttpSession session) {
+        User user = (User) session.getAttribute("loggedInUser");
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        conferenceService.deleteConference(conferenceId, user);
+        return "redirect:/conferences";
+    }
+
     private void populateDashboard(Model model, User user) {
         model.addAttribute("loggedInUser", user);
         model.addAttribute("conferenceForm", new Conference());

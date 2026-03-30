@@ -44,20 +44,38 @@
 
 <h2>Conferences organisees</h2>
 <ul>
-    <li th:each="conference : ${organizedConferences}" th:text="${conference.titleconf}"></li>
+    <li th:each="conference : ${organizedConferences}">
+        <span th:text="${conference.titleconf}"></span>
+        <form th:action="@{/conferences/delete}" method="post" style="display: inline;">
+            <input type="hidden" name="conferenceId" th:value="${conference.idconf}">
+            <button type="submit">Supprimer</button>
+        </form>
+    </li>
     <li th:if="${#lists.isEmpty(organizedConferences)}">Aucune conference organisee.</li>
 </ul>
 
 <h2>Conferences auxquelles je participe</h2>
 <ul>
-    <li th:each="conference : ${participatingConferences}" th:text="${conference.titleconf}"></li>
+    <li th:each="conference : ${participatingConferences}">
+        <span th:text="${conference.titleconf}"></span>
+        <form th:action="@{/conferences/leave}" method="post" style="display: inline;">
+            <input type="hidden" name="conferenceId" th:value="${conference.idconf}">
+            <button type="submit">Quitter</button>
+        </form>
+    </li>
     <li th:if="${#lists.isEmpty(participatingConferences)}">Aucune conference rejointe.</li>
 </ul>
 
 <h2>Toutes les conferences</h2>
 <ul>
     <li th:each="conference : ${allConferences}">
-        <span th:text="${conference.titleconf}"></span>
+        <strong th:text="${conference.titleconf}"></strong>
+        <span th:if="${conference.thematiques != null and !conference.thematiques.isEmpty()}">
+            [<span th:each="theme, iterStat : ${conference.thematiques}" th:text="${theme.nomThematique} + (${!iterStat.last} ? ', ' : '')"></span>]
+        </span>
+        <span th:if="${conference.urlwebsiteconf != null and !conference.urlwebsiteconf.isEmpty()}">
+            - <a th:href="${conference.urlwebsiteconf}" target="_blank">Site web</a>
+        </span>
         <span th:if="${conference.organizer != null}"
               th:text="' - organisee par ' + ${conference.organizer.name}"></span>
         <span th:if="${conference.dtstartconf != null and conference.dtendconf != null}"

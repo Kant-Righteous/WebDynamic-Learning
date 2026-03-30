@@ -80,4 +80,28 @@ public class ConferenceService {
         return false;
     }
 
+    public boolean leaveConference(Integer conferenceId, User user) {
+        Conference conf = conferenceRepository.findById(conferenceId).orElse(null);
+        if (conf != null && user != null) {
+            conf.getParticipants().removeIf(participant -> participant.getId().equals(user.getId()));
+            user.getParticipatedConferences().removeIf(c -> c.getIdconf().equals(conf.getIdconf()));
+            conferenceRepository.save(conf);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteConference(Integer conferenceId, User user) {
+        Conference conf = conferenceRepository.findById(conferenceId).orElse(null);
+        if (conf != null && conf.getOrganizer() != null && conf.getOrganizer().getId().equals(user.getId())) {
+            // Need to first clear references conceptually (JPA sometimes struggles if we just delete directly depending on cascades)
+            conf.getParticipants().forEach(p -> p.getParticipatedConferences().removeIf(c -> c.getIdconf().equals(conf.getIdconf())));
+            conf.getParticipants().clear();
+            conf.getThematiques().clear();
+            conferenceRepository.delete(conf);
+            return true;
+        }
+        return false;
+    }
+
 }
