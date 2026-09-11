@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import utcapitole.miage.tp6_7.dto.FilmDTO;
 import utcapitole.miage.tp6_7.dto.FilmPageDTO;
 import utcapitole.miage.tp6_7.entity.User;
 import utcapitole.miage.tp6_7.service.FilmService;
@@ -33,7 +34,7 @@ public class FilmWebController {
 
     @GetMapping("/film/{id}")
     public String showFilmDetails(@PathVariable int id, Model model, HttpSession session) {
-        var film = filmService.getFilmById(id);
+        FilmDTO film = filmService.getFilmById(id);
         model.addAttribute("film", film);
         addSessionUserData(model, session);
 

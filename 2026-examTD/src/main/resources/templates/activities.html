@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Activities</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+<body>
+<div class="page-shell">
+    <header class="page-header">
+        <div>
+            <h1>Activities</h1>
+            <p class="page-subtitle">Let's do sports.</p>
+        </div>
+        <div class="user-box">
+            <div th:if="${loginUser != null}">
+                <p class="user-name" th:text="${loginUser.username}">username</p>
+                <form th:action="@{/logout}" method="post">
+                    <button type="submit" class="button-secondary">Se deconnecter</button>
+                </form>
+            </div>
+            <div th:if="${loginUser == null}">
+                <p class="simple-text">Connecte-toi.</p>
+                <div class="header-actions">
+                    <a th:href="@{/login}" class="button-primary">Connexion</a>
+                    <a th:href="@{/register}" class="button-secondary">Inscription</a>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>
+</body>
+</html>

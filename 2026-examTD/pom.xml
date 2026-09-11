@@ -5,14 +5,14 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.0.4</version>
+        <version>4.0.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>utcapitole.miage.tp6-7</groupId>
-    <artifactId>tp6-7</artifactId>
+    <groupId>utcapitole.miage</groupId>
+    <artifactId>2026-examTD</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>tp6-7</name>
-    <description>tp6-7</description>
+    <name>2026-examTD</name>
+    <description>2026-examTD</description>
     <url/>
     <licenses>
         <license/>
@@ -79,14 +79,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>11</source>
-                    <target>11</target>
-                </configuration>
             </plugin>
         </plugins>
     </build>
